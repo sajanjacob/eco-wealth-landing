@@ -7,9 +7,8 @@ import WaitingListMobileMenu from "../home/WaitingListMobileMenu";
 import Logo from "./Logo";
 
 import { useMediaQuery } from "@mui/material";
-type Props = {};
 
-const Header = ({}: Props) => {
+const Header = () => {
 	const supabase = supabaseClient;
 	const router = useRouter();
 	

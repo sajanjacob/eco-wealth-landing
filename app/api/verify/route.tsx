@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+
 import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
 import { extractFirstName } from "@/src/presentation/utils/nameUtils";
 import { validateApiKey } from "@/src/middleware/authMiddleware";
 import { getKitAuthToken } from "@/src/presentation/utils/kitUtils";
 
-export async function PUT(req: NextRequest, res: NextResponse) {
+export async function PUT(req: NextRequest) {
 	// Validate API key
     const authError = validateApiKey(req);
     if (authError) return authError;

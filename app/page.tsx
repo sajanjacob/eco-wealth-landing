@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 // import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { HomeTemplate } from "@/src/presentation/components/templates/HomeTemplate";
 // import { useEnvironmentalStats } from "@/presentation/hooks/useEnvironmentalStats";

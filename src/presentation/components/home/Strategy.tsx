@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function Strategy({}: Props) {
+export default function Strategy() {
 	return (
 		<>
 			<hr className='border-green-400' />

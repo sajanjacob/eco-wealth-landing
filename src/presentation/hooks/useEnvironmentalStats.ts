@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 // import { EnvironmentalStatsService } from '@/application/services/EnvironmentalStatsService';
 
 export function useEnvironmentalStats() {
-  const [treeCount, setTreeCount] = useState(0);
-  const [arrayCount, setArrayCount] = useState(0);
+  // const [treeCount, setTreeCount] = useState(0);
+  // const [arrayCount, setArrayCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,5 +22,5 @@ export function useEnvironmentalStats() {
     fetchStats();
   }, []);
 
-  return { treeCount, arrayCount, isLoading };
+  return { isLoading };
 } 

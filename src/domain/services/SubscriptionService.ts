@@ -1,6 +1,5 @@
 import { Subscriber } from '../entities/Subscriber';
 import { RecentSignup } from '../entities/RecentSignup';
-import { Email } from '../value-objects/Email';
 import { SubscriberAddedEvent, DuplicateSubscriptionAttemptedEvent } from '../events/SubscriberEvents';
 
 export interface SubscriberRepository {

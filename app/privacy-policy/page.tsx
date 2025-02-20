@@ -1,9 +1,7 @@
 import SupportLink from "@/src/presentation/components/global/SupportLink";
 import React from "react";
 
-type Props = {};
-
-export default function PrivacyPolicy({}: Props) {
+export default function PrivacyPolicy() {
 	return (
 		<div className='p-8'>
 			<h1 className='text-[22px] font-bold mb-4'>

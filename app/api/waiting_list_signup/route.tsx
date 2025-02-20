@@ -10,7 +10,7 @@ import { validateApiKey } from "@/src/middleware/authMiddleware";
 const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
 	// Validate API key
     const authError = validateApiKey(req);
     if (authError) return authError;

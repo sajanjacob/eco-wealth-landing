@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function Disclaimer({}: Props) {
+export default function Disclaimer() {
 	return (
 		<div
 			id='about'

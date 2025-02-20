@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function SupportLink({}: Props) {
+export default function SupportLink() {
 	return (
 		<div>
 			<a

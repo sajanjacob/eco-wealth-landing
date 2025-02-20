@@ -19,9 +19,8 @@ import { MdErrorOutline } from "react-icons/md";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import SupportLink from "@/src/presentation/components/global/SupportLink";
 import apiClient from "@/src/presentation/utils/apiClient";
-type Props = {};
 
-export default function Verify({}: Props) {
+export default function Verify() {
 	const searchParams = useSearchParams();
 	const token = searchParams?.get("token");
 	const [verified, setVerified] = React.useState(false);

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import { validateApiKey } from "@/src/middleware/authMiddleware";
 import { createClient } from "@supabase/supabase-js";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
 	// Validate API key
     const authError = validateApiKey(req);
     if (authError) return authError;

@@ -7,7 +7,7 @@ import { extractFirstName } from "../../utils/nameUtils";
 import apiClient from "../../utils/apiClient";
 
 export default function RecentRegistrations() {
-	const [registrations, setRegistrations] = useState<any>([]);
+	const [registrations, setRegistrations] = useState<any[]>([]);
 	useEffect(() => {
 		const fetchRegistrations = async () =>
 			apiClient.get("/api/recent_waiting_list_subscribers").then((res) => {

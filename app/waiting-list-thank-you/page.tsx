@@ -4,9 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { extractFirstName } from "@/src/presentation/utils/nameUtils";
 
-type Props = {};
-
-export default function WaitingListThankYou({}: Props) {
+export default function WaitingListThankYou() {
 	const params = useSearchParams();
 	const router = useRouter();
 	function handleReturnHome() {

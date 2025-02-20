@@ -30,7 +30,7 @@ export default function WaitingListGoalTracker() {
 		.on(
 			"postgres_changes",
 			{ event: "INSERT", schema: "public", table: "waiting_list" },
-			(payload: any) => {
+			() => {
 				fetchCurrentCount();
 			}
 		)

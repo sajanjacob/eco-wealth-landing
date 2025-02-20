@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai"; // Assuming you're using react-icons for the close icon as well
 
-type Props = {};
-
-export default function WaitingListMobileMenu({}: Props) {
+export default function WaitingListMobileMenu() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (

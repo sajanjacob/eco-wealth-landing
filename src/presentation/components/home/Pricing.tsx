@@ -1,6 +1,5 @@
 import React from "react";
 import PricingTable from "./PricingTable";
-import { useRouter } from "next/navigation";
 
 type Props = {
 	handleWaitingListClick: () => void;
@@ -22,7 +21,7 @@ interface PricingPlan {
 	externalCtaText?: string;
 }
 export default function Pricing({ handleWaitingListClick }: Props) {
-	const router = useRouter();
+	
 	const plans = [
 		{
 			title: "Carbon Credits",

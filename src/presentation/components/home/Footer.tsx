@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function Footer({}: Props) {
+export default function Footer() {
 	return (
 		<div className='pb-[100px] px-[64px]'>
 			<div>

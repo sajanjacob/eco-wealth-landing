@@ -160,7 +160,7 @@ function WaitingListForm() {
 				personalReferrer,
 				businessReferrer,
 			})
-			.then((res) => {
+			.then(() => {
 				router.push(`/waiting-list-thank-you?name=${formatFinalName(name)}&email=${email}`);
 			})
 			.catch((err) => {

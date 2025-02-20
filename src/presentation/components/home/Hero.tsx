@@ -2,21 +2,9 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import WaitingListGoalTracker from "./WaitingListGoalTracker";
-import { User } from "@supabase/supabase-js";
 
-type Props = {
-    user?: User;
-    isLoading?: boolean;
-    onWaitingList: () => void;
-    onLogin: () => void;
-    onSignup: () => void;
-};
-
-export default function Hero({user,
-    isLoading,
-    onWaitingList,
-    onLogin,
-    onSignup}: Props) {
+export default function Hero(
+  ) {
 	const router = useRouter();
 
 	const handleWaitingListClick = () => router.push("/register");

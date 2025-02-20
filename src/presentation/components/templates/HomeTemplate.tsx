@@ -9,12 +9,6 @@ import Disclaimer from '../home/Disclaimer';
 import Footer from '../home/Footer';
 
 interface HomeTemplateProps {
-  user?: any; // Replace with proper user type
-  stats?: {
-    treeCount: number;
-    arrayCount: number;
-  };
-  isLoading?: boolean;
   navigationHandlers: {
     onLogin: () => void;
     onSignup: () => void;
@@ -24,25 +18,19 @@ interface HomeTemplateProps {
   };
 }
 
-export function HomeTemplate({ 
-  user, 
-  isLoading, 
+export function HomeTemplate({
   navigationHandlers 
 }: HomeTemplateProps) {
   return (
     <>
       <Hero 
-        user={user}
-        isLoading={isLoading}
-        onWaitingList={navigationHandlers.onWaitingList}
-        onLogin={navigationHandlers.onLogin}
-        onSignup={navigationHandlers.onSignup}
+        
       />
       <main className="2xl:w-[1200px] md:mx-auto mt-[90vh]">
         <About />
         <Strategy />
         <HowItWorks />
-        <Pricing />
+        <Pricing handleWaitingListClick={navigationHandlers.onWaitingList}/>
         <RecentRegistrations />
         <Disclaimer />
         <Footer />
