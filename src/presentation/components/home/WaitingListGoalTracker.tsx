@@ -47,15 +47,21 @@ export default function WaitingListGoalTracker() {
 	  };
 	}, []);
 
-	// Calculate the width of the loading bar
+	// Calculate the width of the loading bar with a maximum of 100%
 	const loadingWidth = Math.min(100, (entryCount / GOAL) * 100);
+	const displayCount = entryCount > GOAL ? `${GOAL}+` : entryCount;
+	const goalReached = entryCount >= GOAL;
 
 	return (
 		<div className='mt-2'>
-			<p className='text-sm mb-[4px]'>Help us reach 1000 waiting list users!</p>
+			<p className='text-sm mb-[4px]'>
+				{goalReached 
+					? 'Thank you! We\'ve reached our initial goal of 1000 waiting list users!'
+					: 'Help us reach 1000 waiting list users!'}
+			</p>
 			<div className='border-green-800 border-[1px] rounded-md'>
 				<div
-					className={`bg-green-400 transition-all duration-500 ease-out rounded-md`}
+					className={`bg-[var(--cta-one)] transition-all duration-500 ease-out rounded-md`}
 					style={{
 						width: `${loadingWidth}%`,
 						height: "8px",
@@ -74,7 +80,7 @@ export default function WaitingListGoalTracker() {
 						}}
 					/>
 				) : null}
-				<p className='mt-[2px]'>{entryCount}/1000</p>
+				<p className='mt-[2px]'>{displayCount}/1000</p>
 			</div>
 		</div>
 	);
