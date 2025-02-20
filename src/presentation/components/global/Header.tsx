@@ -5,8 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import WaitingListMobileMenu from "../home/WaitingListMobileMenu";
 import Logo from "./Logo";
 
-import { useMediaQuery } from "@mui/material";
-
 const Header = () => {
 	const router = useRouter();
 	
