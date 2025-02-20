@@ -11,18 +11,20 @@ const Header = () => {
 	const [render, setRender] = useState(false);
 	const path = usePathname();
 	useEffect(() => {
-		path !== "/thankyou" &&
-		path !== "/waiting-list-thank-you" &&
-		path !== "/register" &&
-		path !== "/login" &&
-		path !== "/signup" &&
-		path !== "/forgot-password" &&
-		path !== "/onboarding" &&
-		path !== "/i/onboarding" &&
-		path !== "/p/onboarding" &&
-		path !== "/setup-mfa"
-			? setRender(true)
-			: setRender(false);
+		setRender(
+			![
+				"/thankyou",
+				"/waiting-list-thank-you",
+				"/register",
+				"/login",
+				"/signup",
+				"/forgot-password",
+				"/onboarding",
+				"/i/onboarding",
+				"/p/onboarding",
+				"/setup-mfa"
+			].includes(path)
+		);
 	}, [path]);
 	
 	const handleAboutClick = () => {
