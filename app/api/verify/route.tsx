@@ -4,7 +4,6 @@ import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
 import { extractFirstName } from "@/src/presentation/utils/nameUtils";
 import { validateApiKey } from "@/src/middleware/authMiddleware";
-import { getKitAuthToken } from "@/src/presentation/utils/kitUtils";
 
 export async function PUT(req: NextRequest) {
 	// Validate API key

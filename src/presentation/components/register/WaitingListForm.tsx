@@ -167,9 +167,7 @@ function WaitingListForm() {
 				console.log("/api/waiting_list_signup >> err", err);
 			});
 	};
-	const handleReturnHome = () => {
-		router.push("/");
-	};
+	
 	useEffect(() => {
 		const isValid = 
 			validateName(name) && 

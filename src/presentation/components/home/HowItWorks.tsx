@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-export default function HowItWorks({}: Props) {
+export default function HowItWorks() {
 	return (
 		<>
 			<hr className='border-green-400' />

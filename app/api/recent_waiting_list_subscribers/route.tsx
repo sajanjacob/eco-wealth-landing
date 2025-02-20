@@ -31,7 +31,10 @@ export async function GET(req: NextRequest) {
 			.eq("email_verified", true)
 			.order("created_at", { ascending: false })
 			.limit(5);
-
+        if(waitingListError) {
+            console.error("Error fetching waiting list data:", waitingListError);
+            return NextResponse.json({ message: "Error fetching waiting list data" }, { status: 500 });
+        }
 		
 		// Combine, filter, and sort the data
 		const filteredData = (waitingListData || [])

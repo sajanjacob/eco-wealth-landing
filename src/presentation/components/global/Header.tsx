@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { supabaseClient } from "@/src/presentation/utils/supabaseClient";
 
 import WaitingListMobileMenu from "../home/WaitingListMobileMenu";
 import Logo from "./Logo";
@@ -9,13 +8,10 @@ import Logo from "./Logo";
 import { useMediaQuery } from "@mui/material";
 
 const Header = () => {
-	const supabase = supabaseClient;
 	const router = useRouter();
 	
 	const [render, setRender] = useState(false);
-	const [theme, setTheme] = useState<string>("light" || "dark");
 	const path = usePathname();
-	const matches = useMediaQuery("(min-width:768px)");
 	useEffect(() => {
 		path !== "/thankyou" &&
 		path !== "/waiting-list-thank-you" &&

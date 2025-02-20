@@ -6,8 +6,14 @@ import { FaFileSignature } from "react-icons/fa";
 import { extractFirstName } from "../../utils/nameUtils";
 import apiClient from "../../utils/apiClient";
 
+type Registration = {
+	name: string;
+	email: string;
+	created_at: string;
+};
+
 export default function RecentRegistrations() {
-	const [registrations, setRegistrations] = useState<any[]>([]);
+	const [registrations, setRegistrations] = useState<Registration[]>([]);
 	useEffect(() => {
 		const fetchRegistrations = async () =>
 			apiClient.get("/api/recent_waiting_list_subscribers").then((res) => {
@@ -19,7 +25,7 @@ export default function RecentRegistrations() {
 	}, []);
 
 	useEffect(() => {
-		async function DisplayPopup(index: number, name: string, toastId: string) {
+		async function DisplayPopup(index: number, name: string) {
 			setTimeout(async () => {
 				toast.success(
 					() => (
@@ -45,9 +51,7 @@ export default function RecentRegistrations() {
 			}, index * 5000);
 		}
 		for (let i = 0; i < registrations.length; i++) {
-			const toastId = `registration-${registrations[i].id}`; // Assuming each registration has a unique 'id'
-
-			DisplayPopup(i, registrations[i].name, toastId);
+			DisplayPopup(i, registrations[i]?.name);
 		}
 	}, [registrations]);
 

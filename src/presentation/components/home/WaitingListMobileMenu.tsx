@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai"; // Assuming you're using react-icons for the close icon as well
+import Link from "next/link";
 
 export default function WaitingListMobileMenu() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,41 +26,41 @@ export default function WaitingListMobileMenu() {
 					>
 						<AiOutlineClose className='text-2xl' />
 					</button>
-					<a
+					<Link
 						href='/#about'
 						className='p-4 border-b border-gray-200'
 						onClick={() => setIsMenuOpen(false)}
 					>
 						About
-					</a>
-					<a
+					</Link>
+					<Link
 						href='/#strategy'
 						className='p-4 border-b border-gray-200'
 						onClick={() => setIsMenuOpen(false)}
 					>
 						Strategy
-					</a>
-					<a
+					</Link>
+					<Link
 						href='/#how-it-works'
 						className='p-4 border-b border-gray-200'
 						onClick={() => setIsMenuOpen(false)}
 					>
 						How it works
-					</a>
-					<a
+					</Link>
+					<Link
 						href='/#pricing'
 						className='p-4 border-b border-gray-200'
 						onClick={() => setIsMenuOpen(false)}
 					>
 						Pricing
-					</a>
-					<a
+					</Link>
+					<Link
 						href='/register'
 						className='p-4'
 						onClick={() => setIsMenuOpen(false)}
 					>
 						Join the waiting list today
-					</a>
+					</Link>
 				</div>
 			)}
 		</div>

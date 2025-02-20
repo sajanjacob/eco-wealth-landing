@@ -7,9 +7,14 @@ import { BASE_URL } from "@/src/presentation/utils/constants";
 import { validateName, validateEmail, validateReferralText, formatName } from "@/src/presentation/utils/inputValidation";
 import { validateApiKey } from "@/src/middleware/authMiddleware";
 
-const sgMail = require("@sendgrid/mail");
+import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+if (!SENDGRID_API_KEY) {
+    throw new Error('SENDGRID_API_KEY is not configured');
+}
+sgMail.setApiKey(SENDGRID_API_KEY);
+
 export async function POST(req: NextRequest) {
 	// Validate API key
     const authError = validateApiKey(req);
