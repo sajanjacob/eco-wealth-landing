@@ -24,19 +24,27 @@ export default function WaitingListGoalTracker() {
 				setLoading(false);
 			});
 	};
-	// subscribe to supabase changes
-	supabase
-		.channel("waiting_list")
+	
+	useEffect(() => {
+		// Set up Supabase subscription only on client side
+		const channel = supabase
+		.channel("waiting_list_subscribers")
 		.on(
-			"postgres_changes",
-			{ event: "INSERT", schema: "public", table: "waiting_list" },
-			() => {
-				fetchCurrentCount();
-			}
+		  "postgres_changes",
+		  { event: "INSERT", schema: "public", table: "waiting_list" },
+		  () => {
+			fetchCurrentCount();
+		  }
 		)
 		.subscribe();
-	useEffect(() => {
-		fetchCurrentCount();
+  
+	  // Initial fetch
+	  fetchCurrentCount();
+  
+	  // Cleanup subscription
+	  return () => {
+		channel.unsubscribe();
+	  };
 	}, []);
 
 	// Calculate the width of the loading bar
