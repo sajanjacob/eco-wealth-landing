@@ -1,12 +1,13 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { extractFirstName } from "@/src/presentation/utils/nameUtils";
 
-export default function WaitingListThankYou() {
+function ThankYouContent() {
 	const params = useSearchParams();
 	const router = useRouter();
+	
 	function handleReturnHome() {
 		router.push("/");
 	}
@@ -32,5 +33,13 @@ export default function WaitingListThankYou() {
 				Please check your email to confirm your registration.
 			</p>
 		</div>
+	);
+}
+
+export default function WaitingListThankYou() {
+	return (
+		<Suspense fallback={<div className='flex flex-col items-center justify-center min-h-screen px-12'>Loading...</div>}>
+			<ThankYouContent />
+		</Suspense>
 	);
 }
