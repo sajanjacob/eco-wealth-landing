@@ -20,7 +20,7 @@ export default function Hero(
             <div className='z-[1000] w-full h-full flex justify-center flex-col items-center bg-black bg-opacity-75 '>
                 <div className='z-[1000] w-[80%] m-auto items-center md:w-[50%]'>
                     <h1 className='text-white font-bold text-2xl md:text-3xl md:w-[100%] md:mt-0'>
-                        Together, we can make a positive impact all around the world by{" "}
+                        Together, we can make a positive impact worldwide by{" "}
                         <span className='text-[var(--h-one)]'> planting trees</span>,
                         prioritizing{" "}
                         <span className='text-[var(--h-one)]'> soil health</span>, and
