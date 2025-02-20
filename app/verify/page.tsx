@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import {
 	FacebookShareButton,
 	RedditShareButton,
@@ -19,12 +19,13 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import SupportLink from "@/src/presentation/components/global/SupportLink";
 import apiClient from "@/src/presentation/utils/apiClient";
 
-export default function Verify() {
+function VerifyContent() {
 	const searchParams = useSearchParams();
 	const token = searchParams?.get("token");
 	const [verified, setVerified] = React.useState(false);
 	const [error, setError] = React.useState(false);
 	const [loading, setLoading] = React.useState(true);
+
 	useEffect(() => {
 		setLoading(true);
 		apiClient
@@ -33,7 +34,6 @@ export default function Verify() {
 				console.log("res: ", res);
 				setVerified(true);
 				setLoading(false);
-                
 			})
 			.catch((err) => {
 				console.log("err: ", err);
@@ -118,4 +118,13 @@ export default function Verify() {
 				</div>
 			</div>
 		);
+	return null;
+}
+
+export default function Verify() {
+	return (
+		<Suspense fallback={<div className='flex justify-center flex-col items-center pt-52'>Loading...</div>}>
+			<VerifyContent />
+		</Suspense>
+	);
 }
