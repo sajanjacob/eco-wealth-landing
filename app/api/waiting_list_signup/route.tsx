@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 	}
 
 	try {
-		const { name, email, referralSource, personalReferrer, businessReferral } = await req.json();
+		const { name, email, phone_number, referralSource, personalReferrer, businessReferral } = await req.json();
 
 		// Server-side validation
 		if (!validateName(name)) {
@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
 		const waitingListData = {
 			name: formatName(name),
 			email,
+			phone_number,
 			referrer_details: {
 				referral_source: referralSource,
 				referrer: personalReferrer || businessReferral || "",

@@ -45,4 +45,13 @@ export const sanitizeInput = (input: string): string => {
 // New function to format the final name when submitting
 export const formatFinalName = (input: string): string => {
   return formatName(sanitizeInput(input));
+};
+
+export const validatePhoneNumber = (phone: string): boolean => {
+  // Allow empty string since we'll make it required in the form
+  if (!phone.trim()) return false;
+  
+  // Basic phone number validation - allows international formats
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+  return phoneRegex.test(phone.replace(/[\s()-]/g, ''));
 }; 

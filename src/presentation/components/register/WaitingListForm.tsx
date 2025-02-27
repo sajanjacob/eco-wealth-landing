@@ -6,7 +6,7 @@ import axios from "axios";
 import { BiLock } from "react-icons/bi";
 import Logo from "@/src/presentation/components/global/Logo";
 import Turnstile, { useTurnstile } from "react-turnstile";
-import { validateName, validateEmail, validateReferralText, sanitizeInput, formatFinalName } from "@/src/presentation/utils/inputValidation";
+import { validateName, validateEmail, validateReferralText, sanitizeInput, formatFinalName, validatePhoneNumber } from "@/src/presentation/utils/inputValidation";
 import apiClient from "../../utils/apiClient";
 
 function WaitingListForm() {
@@ -23,6 +23,9 @@ function WaitingListForm() {
 	const turnstile = useTurnstile();
 	const [nameError, setNameError] = useState("");
 	const [referralError, setReferralError] = useState("");
+	const [phoneNumber, setPhoneNumber] = useState("");
+	const [phoneError, setPhoneError] = useState("");
+	const [isChecked, setIsChecked] = useState(false);
 
 	useEffect(() => {
 		if (ref) {
@@ -80,6 +83,17 @@ function WaitingListForm() {
 			setReferralError("Please enter valid referrer details");
 		} else {
 			setReferralError("");
+		}
+	};
+
+	const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const sanitizedPhone = sanitizeInput(e.target.value);
+		setPhoneNumber(sanitizedPhone);
+		
+		if (!validatePhoneNumber(sanitizedPhone)) {
+			setPhoneError("Please enter a valid phone number");
+		} else {
+			setPhoneError("");
 		}
 	};
 
@@ -156,6 +170,7 @@ function WaitingListForm() {
 			.post("/api/waiting_list_signup", {
 				name: formatFinalName(name),
 				email,
+				phone_number: phoneNumber.replace(/[\s()-]/g, ''),
 				referralSource,
 				personalReferrer,
 				businessReferrer,
@@ -172,23 +187,30 @@ function WaitingListForm() {
 		const isValid = 
 			validateName(name) && 
 			validateEmail(email) && 
+			validatePhoneNumber(phoneNumber) &&
+			isChecked &&
 			!nameError && 
 			!emailError && 
+			!phoneError &&
 			!referralError;
 		setIsFormValid(isValid);
-	}, [name, email, nameError, emailError, referralError]);
+	}, [name, email, phoneNumber, isChecked, nameError, emailError, phoneError, referralError]);
 	return (
 		<form
 			onSubmit={handleSubmit}
 			className='flex flex-col items-center justify-center min-h-screen'
 		>
-			<Logo
-				width={384}
-				height={150}
-			/>
-			<h2 className='mb-12 lg:text-xl text-gray-400 text-center'>
-				Join the waiting list and be the first to <br/>know when the app launches!
-			</h2>
+			<div className="flex flex-col items-center justify-center">
+				<Logo
+					width={200}
+					height={150}
+					mWidth={148}
+					mHeight={50}
+				/>
+				<h2 className='mb-3 lg:mb-8 text-sm lg:text-xl text-gray-400 text-center'>
+					Join the waiting list and be the first to <br/>know when the app launches!
+				</h2>
+			</div>
 			<div className='flex flex-col mb-4'>
 				<label className='mb-2'>Name:</label>
 				<input
@@ -197,6 +219,7 @@ function WaitingListForm() {
 					className='w-[300px] px-2 py-2 rounded-lg border border-gray-300 text-gray-900'
 					onChange={handleNameChange}
 					maxLength={50}
+					placeholder="Joseph Jones"
 				/>
 				{nameError && <p className="text-red-500 text-sm mt-1">{nameError}</p>}
 			</div>
@@ -208,8 +231,21 @@ function WaitingListForm() {
 					className='w-[300px] px-2 py-2 rounded-lg border border-gray-300 text-gray-900'
 					onChange={handleEmailChange}
 					maxLength={100}
+					placeholder="joseph.jones@example-email.com"
 				/>
 				{emailError && <p style={{ color: "red" }}>{emailError}</p>}
+			</div>
+			<div className='flex flex-col mb-4'>
+				<label className='mb-2'>Phone Number:</label>
+				<input
+					type='tel'
+					value={phoneNumber}
+					className='w-[300px] px-2 py-2 rounded-lg border border-gray-300 text-gray-900'
+					onChange={handlePhoneChange}
+					placeholder="+1234567890"
+					maxLength={15}
+				/>
+				{phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
 			</div>
 			{/* Referral source dropdown */}
 			<div className='flex flex-col mb-4'>
@@ -237,62 +273,74 @@ function WaitingListForm() {
 			{/* Conditional text input for referrer */}
 			{renderSpecificReferralInput()}
 			
-			<button
-				className={
-					isFormValid
-						? "w-[300px] mt-8 px-4 py-2 rounded-lg bg-[var(--cta-one)] text-white cursor-pointer hover:bg-[var(--cta-one-hover)] transition-all hover:scale-105"
-						: "w-[300px] mt-8 px-4 py-2 rounded-lg bg-gray-700 text-white cursor-default"
-				}
-				type='button'
-				onClick={() => setShowTurnstile(true)}
-				disabled={!isFormValid}
-			>
-				Join waiting list
-			</button>
-			<div className="mt-8">
-				{showTurnstile
-					&& <Turnstile
-							sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
-							onVerify={() => {
-								apiClient.post('/api/waiting_list_signup', {
-									name,
-									email,
-									referralSource,
-									personalReferrer,
-									businessReferrer
-								}).then(() => {
-									console.log("Successfully submitted form");
-									const searchParams = new URLSearchParams();
-									searchParams.append('name', formatFinalName(name));
-									searchParams.append('email', email);
-									router.push('/waiting-list-thank-you?' + searchParams.toString());
-									turnstile.reset();
-								}).catch((err) => {
-									console.log(err);
-									turnstile.reset();
-								});
-							}}
-						/>
-				}
-			</div>
-			<div className='w-[300px] mt-4'>
-				<p className='text-xs mt-2 text-gray-500'>
-					<BiLock className='inline text-base' />
-					<b>Your Privacy:</b> We promise to keep your contact information
-					confidential and only contact you with news & updates regarding Eco
-					Wealth, and inviting you to test the platform when opportunities
-					arise.
-				</p>
-				<p className='text-xs mt-2 text-gray-500'>
-					<b>Note:</b> More details can be found in our{" "}
-					<a
-						href='/privacy-policy'
-						className='underline cursor-pointer hover:text-gray-400 transition-all'
-					>
-						privacy policy
-					</a>
-					.
-				</p>
+			<div className='w-[300px] lg:mt-4'>
+				<div className='flex items-start mb-4 lg:mb-8'>
+					<input
+						type='checkbox'
+						checked={isChecked}
+						onChange={(e) => setIsChecked(e.target.checked)}
+						className='mt-1 mr-2'
+					/>
+					<div className='flex flex-col'>
+						<p className='text-sm text-gray-300'>I consent to be contacted.</p>
+						<label className='text-xs text-gray-500 leading-tight'>
+							By checking this box, you agree to be contacted with news, updates, or third-party information related to Eco Wealth, including when opportunities arise to test the platform.
+						</label>
+						<p className='text-xs mt-1 text-gray-500'>
+							<BiLock className='inline text-base' /> View our{" "}
+							<a
+								href='/privacy-policy'
+								className='underline cursor-pointer hover:text-gray-400 transition-all'
+							>
+								privacy policy
+							</a>
+							{" "}for details on how we protect your information.
+						</p>
+					</div>
+				</div>
+				<div className='my-4'>
+					{showTurnstile && <Turnstile
+						sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+						onVerify={() => {
+							apiClient.post('/api/waiting_list_signup', {
+								name,
+								email,
+								phone_number: phoneNumber.replace(/[\s()-]/g, ''),
+								referralSource,
+								personalReferrer,
+								businessReferrer
+							}).then(() => {
+								console.log("Successfully submitted form");
+								const searchParams = new URLSearchParams();
+								searchParams.append('name', formatFinalName(name));
+								searchParams.append('email', email);
+								router.push('/waiting-list-thank-you?' + searchParams.toString());
+								turnstile.reset();
+							}).catch((err) => {
+								console.log(err);
+								turnstile.reset();
+							});
+						}}
+					/>}
+				</div>
+				<button
+					className={
+						showTurnstile && isFormValid
+							? "w-[300px] px-4 py-2 rounded-lg bg-gray-700 text-white cursor-default"
+							: isFormValid
+								? "w-[300px] px-4 py-2 rounded-lg bg-[var(--cta-one)] text-white cursor-pointer hover:bg-[var(--cta-one-hover)] transition-all hover:scale-105"
+								: "w-[300px] px-4 py-2 rounded-lg bg-gray-700 text-white cursor-default"
+					}
+					type='button'
+					onClick={() => setShowTurnstile(true)}
+					disabled={!isFormValid}
+				>
+					{showTurnstile ? 'Waiting for verification...' : 'Join waiting list'}
+				</button>
+
+				
+
+				
 			</div>
 		</form>
 	);
