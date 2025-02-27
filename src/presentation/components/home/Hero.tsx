@@ -29,7 +29,7 @@ export default function Hero(
                     </h1>
                     <div>
                         
-                        <h5 className='font-medium tracking-wide text-gray-500 mt-4'>First 1000 users pay no platform fees for life.</h5>
+                        <h5 className='font-medium tracking-wide text-gray-500 mt-4'>First 1000 users pay no platform fees forever.</h5>
                         <button
                             className='z-[1000] pulsate mb-4 cursor-pointer transition-all bg-[var(--cta-one)] hover:bg-[var(--cta-one-hover)] text-white font-medium rounded-md text-sm lg:text-lg lg:px-8 px-4 py-2 mt-8'
                             onClick={handleWaitingListClick}
