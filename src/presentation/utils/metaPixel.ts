@@ -26,7 +26,7 @@ interface LeadData extends UserData {
 }
 
 // Define type for event data
-interface MetaPixelEventData {
+export interface MetaPixelEventData {
   data: Array<{
     event_name: string;
     event_time: number;

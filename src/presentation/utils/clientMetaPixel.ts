@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { MetaPixelEventData } from './metaPixel';
 
+const ENABLE_CONVERSION_API = process.env.NEXT_PUBLIC_ENABLE_META_CONVERSION_API === 'true';
+
 export const sendClientEvent = async (eventData: MetaPixelEventData, accessToken: string, pixelId: string) => {
   if (!ENABLE_CONVERSION_API) {
     console.log('Meta Pixel - Conversion API disabled, skipping client-side event');
