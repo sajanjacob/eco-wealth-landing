@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const ENABLE_CONVERSION_API = process.env.NEXT_PUBLIC_ENABLE_META_CONVERSION_API === 'true';
 
 // Replace Node's crypto with Web Crypto API
