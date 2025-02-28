@@ -3,6 +3,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "@/src/presentation/components/global/Header";
+import CookieConsent from "@/src/presentation/components/global/CookieConsent";
 
 export const metadata: Metadata = {
 	title: "Eco Wealth",
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Header />
         <ToastContainer />
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

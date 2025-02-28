@@ -35,8 +35,6 @@ export async function GET() {
 		// Count unique emails
 		const uniqueEmailsCount = new Set(filteredEmails).size;
 
-		console.log("Total unique non-test users: ", uniqueEmailsCount);
-		console.log("waitingListData: ", waitingListData);
 		return NextResponse.json({ count: uniqueEmailsCount }, { status: 200 });
 	} catch (error) {
 		console.error("Error fetching data:", error);

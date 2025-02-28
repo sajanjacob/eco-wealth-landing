@@ -72,7 +72,7 @@ function VerifyContent() {
 					We will keep you informed about upcoming platform testing & feedback
 					opportunities and the launch via email.
 				</p>
-				<p className='mt-8'>Consider sharing Eco Wealth on social media:</p>
+				<p className='mt-8'>Consider sharing Eco Wealth with your friends:</p>
 
 				<div className='flex mt-2'>
 					<div className='mr-2'>

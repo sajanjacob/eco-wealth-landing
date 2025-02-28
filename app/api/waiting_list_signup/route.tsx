@@ -8,6 +8,7 @@ import { validateName, validateEmail, validateReferralText, formatName } from "@
 import { validateApiKey } from "@/src/middleware/authMiddleware";
 
 import sgMail from "@sendgrid/mail";
+import { sendRegistrationEvent } from "@/src/presentation/utils/metaPixel";
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 if (!SENDGRID_API_KEY) {
@@ -85,7 +86,25 @@ export async function POST(req: NextRequest) {
 				{ status: 500 }
 			);
 		}
-        console.log('data >>> ', data);
+
+		// Send Meta Pixel conversion event
+		const nameParts = formatName(name).split(' ');
+		const firstName = nameParts[0];
+		const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+
+		const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0] || '';
+		const userAgent = req.headers.get('user-agent') || '';
+
+		await sendRegistrationEvent({
+			email,
+			phone: phone_number,
+			firstName,
+			lastName,
+			clientIp,
+			userAgent
+		});
+
+		console.log('data >>> ', data);
 		const { error: verificationTokenError } = await supabase
 			.from("wl_signup_validation_tokens")
 			.insert([

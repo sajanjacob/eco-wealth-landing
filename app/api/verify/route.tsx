@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import axios from "axios";
 import { extractFirstName } from "@/src/presentation/utils/nameUtils";
 import { validateApiKey } from "@/src/middleware/authMiddleware";
+import { sendLeadEvent } from "@/src/presentation/utils/metaPixel";
 
 export async function PUT(req: NextRequest) {
 	// Validate API key
@@ -48,6 +49,17 @@ export async function PUT(req: NextRequest) {
     try {
         console.log('updateUserData >>> ', updateUserData);
         const firstName = extractFirstName(updateUserData.name);
+        
+        const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0] || '';
+        const userAgent = req.headers.get('user-agent') || '';
+
+        await sendLeadEvent({
+            email: updateUserData.email,
+            firstName: firstName,
+            lastName: updateUserData.name.split(' ').slice(1).join(' ') || undefined,
+            clientIp,
+            userAgent
+        });
         
         const kitResponse = await axios.post(
             'https://api.kit.com/v4/subscribers',

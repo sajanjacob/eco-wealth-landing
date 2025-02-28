@@ -53,7 +53,7 @@ export default function Pricing({ handleWaitingListClick }: Props) {
 			title: "Project Equity Shares",
 			subtitle: "(Investors)",
 			prices: [
-				{ amount: "2.9% + $1.30 per transaction", method: "Credit/Debit" },
+				{ amount: "2.9% + $1.30 per transaction", method: "Credit/Debit", comingSoon: true },
 				{
 					amount: "1.3% + $1 per transaction",
 					method: "Bank Wire/Transfer",
@@ -87,6 +87,7 @@ export default function Pricing({ handleWaitingListClick }: Props) {
 				{
 					amount: "100% of Loan + <3% Interest Rates + Long Term Dividend (%)",
 					method: "Bank Wire/Transfer",
+					comingSoon: true,
 				},
 			],
 			features: [
