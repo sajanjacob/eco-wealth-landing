@@ -27,6 +27,27 @@ interface LeadData extends UserData {
   email: string;
 }
 
+// Define type for event data
+interface MetaPixelEventData {
+  data: Array<{
+    event_name: string;
+    event_time: number;
+    action_source: string;
+    user_data: {
+      client_ip_address: string;
+      client_user_agent: string;
+      em?: string[];
+      ph?: string[];
+      fn?: string[];
+      ln?: string[];
+    };
+    custom_data?: {
+      currency: string;
+      value: string;
+    };
+  }>;
+}
+
 const hasUserConsent = (isMiddleware = false): boolean => {
   console.log('checking consent... isMiddleware:', isMiddleware);
   
@@ -40,23 +61,26 @@ const hasUserConsent = (isMiddleware = false): boolean => {
   return consent;
 };
 
-const sendEvent = async (eventData: any, accessToken: string, pixelId: string) => {
+const sendEvent = async (eventData: MetaPixelEventData, accessToken: string, pixelId: string) => {
   if (!ENABLE_CONVERSION_API) {
     console.log('Meta Pixel - Conversion API disabled, skipping server-side event');
     return;
   }
 
   try {
-    const response = await axios.post(
-      `https://graph.facebook.com/v18.0/${pixelId}/events`,
-      eventData,
+    const response = await fetch(
+      `https://graph.facebook.com/v18.0/${pixelId}/events?access_token=${accessToken}`,
       {
-        params: {
-          access_token: accessToken
-        }
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventData),
       }
     );
-    console.log('Meta Pixel - Event sent successfully:', response.data);
+    
+    const data = await response.json();
+    console.log('Meta Pixel - Event sent successfully:', data);
   } catch (error) {
     console.error('Meta Pixel - Error sending event:', error);
   }
