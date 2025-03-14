@@ -9,6 +9,7 @@ import { validateApiKey } from "@/src/middleware/authMiddleware";
 
 import sgMail from "@sendgrid/mail";
 import { sendRegistrationEvent } from "@/src/presentation/utils/metaPixel";
+import { createContact } from '@/src/presentation/utils/adminClient';
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 if (!SENDGRID_API_KEY) {
@@ -135,6 +136,19 @@ export async function POST(req: NextRequest) {
 
 		await sgMail.send(msg);
 
+		// Create contact in admin app
+		try {
+			await createContact({
+				name: formatName(name),
+				email,
+				number: phone_number,
+				platform_source: 'Main landing page',
+				campaign_source: 'Waiting list signup'
+			});
+		} catch (error) {
+			console.error('Failed to create admin contact:', error);
+			// Don't fail the registration if admin contact creation fails
+		}
 
 		return NextResponse.json({ message: "success" }, { status: 200 });
 

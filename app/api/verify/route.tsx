@@ -5,6 +5,7 @@ import axios from "axios";
 import { extractFirstName } from "@/src/presentation/utils/nameUtils";
 import { validateApiKey } from "@/src/middleware/authMiddleware";
 import { sendLeadEvent } from "@/src/presentation/utils/metaPixel";
+import { addKitTag } from "@/src/presentation/utils/kitUtils";
 
 export async function PUT(req: NextRequest) {
 	// Validate API key
@@ -77,19 +78,29 @@ export async function PUT(req: NextRequest) {
         );
         
         console.log('kit response >>> ', kitResponse);
-        const sequence_id = process.env.KIT_SEQUENCE_ID;
-        if (sequence_id && kitResponse.data.subscriber.id) {
-            await axios.post(
-                `https://api.kit.com/v4/sequences/${sequence_id}/subscribers/${kitResponse.data.subscriber.id}`,
-                {},
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-Kit-Api-Key': process.env.NEXT_PUBLIC_KIT_API_KEY
+
+        if (kitResponse.data.subscriber.id) {
+            // Add to sequence if configured
+            const sequence_id = process.env.KIT_SEQUENCE_ID;
+            if (sequence_id) {
+                await axios.post(
+                    `https://api.kit.com/v4/sequences/${sequence_id}/subscribers/${kitResponse.data.subscriber.id}`,
+                    {},
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-Kit-Api-Key': process.env.NEXT_PUBLIC_KIT_API_KEY
+                        }
                     }
-                }
-            );
+                );
+            }
+
+            // Add waiting list tag
+            const tagId = process.env.KIT_ALPHA_2_WAITING_LIST_TAG_ID;
+            if (tagId) {
+                await addKitTag(kitResponse.data.subscriber.id, tagId);
+            }
         }
     } catch (error) {
         console.error("Kit integration error:", error);
