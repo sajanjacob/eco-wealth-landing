@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 	}
 
 	try {
-		const { name, email, phone_number, referralSource, personalReferrer, businessReferral } = await req.json();
+		const { name, email, phone, referralSource, personalReferrer, businessReferral } = await req.json();
 
 		// Server-side validation
 		if (!validateName(name)) {
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 		const waitingListData = {
 			name: formatName(name),
 			email,
-			phone_number,
+			phone,
 			referrer_details: {
 				referral_source: referralSource,
 				referrer: personalReferrer || businessReferral || "",
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
 
 		await sendRegistrationEvent({
 			email,
-			phone: phone_number,
+			phone,
 			firstName,
 			lastName,
 			clientIp,
@@ -141,7 +141,7 @@ export async function POST(req: NextRequest) {
 			await createContact({
 				name: formatName(name),
 				email,
-				number: phone_number,
+				number: phone,
 				platform_source: 'Main landing page',
 				campaign_source: 'Waiting list signup'
 			});

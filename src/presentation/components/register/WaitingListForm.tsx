@@ -170,7 +170,7 @@ function WaitingListForm() {
 			.post("/api/waiting_list_signup", {
 				name: formatFinalName(name),
 				email,
-				phone_number: phoneNumber.replace(/[\s()-]/g, ''),
+				phone: phoneNumber.replace(/[\s()-]/g, ''),
 				referralSource,
 				personalReferrer,
 				businessReferrer,
@@ -305,7 +305,7 @@ function WaitingListForm() {
 							apiClient.post('/api/waiting_list_signup', {
 								name,
 								email,
-								phone_number: phoneNumber.replace(/[\s()-]/g, ''),
+								phone: phoneNumber.replace(/[\s()-]/g, ''),
 								referralSource,
 								personalReferrer,
 								businessReferrer
