@@ -1,7 +1,7 @@
 export interface CreateContactDTO {
   name: string;
   email: string;
-  number?: string;
+  phone?: string;
   platform_source?: string;
   campaign_source?: string;
-} 
+}
