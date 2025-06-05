@@ -294,7 +294,7 @@ const OverviewPage = () => {
           {/* Footer Note */}
           <section>
             <p className="text-sm italic text-gray-500">
-              This overview provides general information about Eco Wealth's
+              This overview provides general information about Eco Wealth&apos;s
               platform and services. All investments carry risk, and potential
               investors should carefully review project details and terms before
               committing capital.
